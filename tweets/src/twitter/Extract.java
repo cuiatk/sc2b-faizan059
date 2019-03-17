@@ -1,4 +1,4 @@
- /* Copyright (c) 2007-2016 MIT 6.005 course staff, all rights reserved.
+/* Copyright (c) 2007-2016 MIT 6.005 course staff, all rights reserved.
  * Redistribution of original or derived work requires permission of course staff.
  */
 package twitter;
@@ -67,7 +67,19 @@ public class Extract {
      */
    
     public static Set<String> getMentionedUsers(List<Tweet> tweets) {
-    	return null;
+    	Set<String> username = new HashSet<String>(); 
+    	String mention_characters="\\B@[a-zA-Z0-9_-]+\\b";
+    	Pattern pattern=Pattern.compile(mention_characters);
+    	for (Tweet tweet: tweets) {
+            String text = tweet.getText();
+            Matcher matcher = pattern.matcher(text);
+            
+            while (matcher.find()) {
+                String myuser = matcher.group().substring(1).toLowerCase();
+                username.add(myuser);
+            }
+    	}
+    	return username;
     }
     
 }
